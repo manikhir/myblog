@@ -1,0 +1,6 @@
+
+    <li><a href="{% url 'single' post.id %}">878{{ post.title }}</a></li>
+    {{post.date|date:"Y-m-d H:i"}}
+
+    
+    <img src="{% url 'show-sales-image' sales_id=post.id %}" width="200" height="200" />

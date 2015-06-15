@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% block content %}
+
+{{category.id}}
+<div>
+
+</div>
+<div style="width:100%;"> 
+<div style="float:left; width:20%;">
+<span><b>List Of All Blogs</b></span>
+<div class="all-blogs">
+
+<ul>
+{% include 'blogs/includes/blog_list.html' %}
+</ul>
+
+</div>
+</div>
+
+<form action="." id="post-form" method="POST">{% csrf_token %}
+<div style="float:right; width:24%; ">
+<span><b>List Of All Category</b></span>
+    {% if categories %}
+    <ul>
+        {% for post in categories %}
+
+            <li> <input type="radio" name="category" value="{{post.id}}" id="{{ post.id}}" class="post_blog">
+            {{ post.title }}</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p>There are no Category</p>
+    {% endif %}
+
+<span><b>List Of All Tag</b></span>
+    {% if all_blogs %}
+    <ul>
+        {% for post in all_blogs %}
+        <li> <input type="radio" name="tag" id="{{ post.id }}" class="post_blog" value="{{post.tag}}" >
+          {{ post.tag }}</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p>There are no Category</p>
+    {% endif %}
+
+<input type="submit" id="c_click" name="c_click" >
+</div>
+
+</form>
+{% endblock %}
+
+{% block extrajs %}
+
+<script type="text/javascript">
+    
+// $(document).ready(function() {
+//     $(".wrapper").jScroll();
+
+// });
+
+// $("#c_click").click(function() {
+
+// data = new Array()
+// $(":checked").each(function() {
+//   data.push(this.name);
+// });
+
+//    $.ajax({
+//           type: "POST",
+//           url: "{% url 'ajax_get_tags' %}",
+//           dataType: "json",
+//           data:
+//           {
+//             'data': data,
+//             'csrfmiddlewaretoken': '{{ csrf_token }}',
+//           },
+//           success: function(response)
+//           {
+//             console.log(response)
+//             // location.reload(true);
+//           }
+//       });
+
+// });
+
+$('#post-form').on('submit', function(event){
+
+
+    
+    event.preventDefault();
+    var allfields = $("#post-form").serializeArray()
+     $.ajax({
+        type: "POST",
+        url: "{% url 'ajax_get_tags' %}",
+        data: allfields,
+        success: function(data)
+        {
+          // debugger
+          $("#post-form")[0].reset()
+          $('.all-blogs').empty()
+          $('.all-blogs').prepend(data.template);
+        }
+    });
+});
+
+</script>
+{% endblock %}

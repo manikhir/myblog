@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+{{category.id}}
+<span><b>You have been posted following blogs</b></span>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Blog Name</th>
+            <th>Date</th>
+            {% if user.is_authenticated %}
+            <th>Edit</th>
+            <th>Delete</th>
+            
+            {% endif %}
+        </tr>
+    </thead>
+    <tbody>
+    {% if blogs %}
+    {% for post in blogs %}
+        <tr>
+        <td><a href="{% url 'single' post.id %}" class="wrapper">{{ post.title }}</a></td>
+        <td>{{post.date|date:"Y-m-d H:i" }}</td>
+        {% if user.is_authenticated %}
+        <td> <a href="{% url 'edit_blog' post.id %}" class="glyphicon glyphicon-pencil"></a></td>
+        <td> <a href="{% url 'delete_blog' post.id %}" id="delete" class="glyphicon glyphicon-trash"></a>
+        </td>
+        {% endif %}
+        </tr>
+    {% endfor %}
+    
+    </div>
+    {% else %}
+        <p>There are no posts.</p>
+    {% endif %}
+        </tr>
+
+    </tbody>
+</table>
+
+<div id="confirm" class="modal hide fade">
+  <div class="modal-body">
+    Are you sure?
+  </div>
+  <div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Delete</button>
+    <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+  </div>
+</div>
+{% endblock %}
+
+{% block extrahead %}
+<script type="text/javascript" src="{{STATIC_URL}}js/"></script>
+<script type="text/javascript">
+    
+$(document).ready(function() {
+    $(".wrapper").jScroll();
+
+
+$( "#delete" ).click(function() {
+$("#myModal").modal('show');
+});
+
+
+
+});
+</script>
+{% endblock extrahead %}

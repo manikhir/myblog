@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+{%load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog Application</title>
+    <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/style.css">
+    <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/jquery-ui.css">
+
+    <script type="text/javascript" src="{{STATIC_URL}}js/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}js/jquery-ui.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}js/bootstrap.min.js"></script>
+
+        {% block extrahead %} {% endblock extrahead %}
+</head>
+
+<body>
+
+
+
+    <div id="wrap">
+      <div class="container">
+          {% if  user.is_authenticated %}
+        <a>Hello,{{ request.user }}!</a>
+        <br>
+        {% else %}
+        <a href="{% url 'social:begin' 'github' %}" class="github" >github</a>
+        <a href="{% url 'social:begin' 'google-oauth2' %}" class="google">google</a>
+        {% endif %} 
+          <div class="masthead">
+              <div class="navbar">
+                <div class="navbar-inner">
+                  <div class="container">
+                  <ul class="nav">
+                    <li>
+                      {% if user.is_authenticated %}
+                        <a href="{% url 'home_page' %}">Home</a>
+                        {% else %}
+                        <a href="/accounts/login/">Home</a>
+                        {% endif %}
+
+                    </li>
+                    <li>
+                      <a href="{% url 'all_blog' %}">UserBlogs</a>
+                  </li>
+                   <li>
+                      {% if user.is_authenticated %}
+                      <a href="{% url 'new_category' %}">Add New Category</a>
+                      {% else %}
+                      <a href="/accounts/login/">AddCategory</a>
+                      {% endif %}
+                  </li>
+                  <li>
+                     {% if  user.is_authenticated %}
+                      <a href="{% url 'new_blog' %}">Post blog</a>
+                      {% else %}
+                      <a href="/accounts/login/">Post blog</a>
+                      {% endif %}
+                  </li>
+                  <li>
+                      {% if user.is_authenticated %}
+                      <a href="/accounts/logout/">logout</a>
+                      {% else %}
+                      <a href="/accounts/login/">login</a>
+                      {% endif %}
+                  </li>
+              </ul>
+            
+                  </div>
+                </div>
+              </div>
+          </div>
+        {% block breadcrumb %}{% endblock %}
+        {% block content %}{% endblock%}
+    </div>
+</div>
+
+</body>
+        {% block extrajs %}{% endblock %}
+
+</html>

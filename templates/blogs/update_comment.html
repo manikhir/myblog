@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+            <form action="." method="post">
+                {% csrf_token %}
+
+                <div class="row-fluid">
+                    <div class="span4 pull">
+                        {{form}}
+
+                        {% comment %}
+
+                        {{ form.non_field_errors }}
+
+                        {{ form.content_type.as_hidden }}
+                        {{ form.object_pk.as_hidden }}
+                        {{ form.timestamp.as_hidden }}
+                        {{ form.security_hash.as_hidden }}
+
+                        {{ form.comment.label_tag }}{{ form.comment }}{{ form.comment.errors }}
+                    </div>
+                    {% endcomment %}
+                </div>
+                <div class="form-actions">
+                    <input type="hidden" name="next" value="#" />
+                    <input type="submit" name="submit" value="Post" class="btn btn-primary" />
+                </div>
+            </form>
+</div>
+
+
+{% endblock content %}
+

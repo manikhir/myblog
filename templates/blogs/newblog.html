@@ -1,0 +1,55 @@
+
+{% extends "base.html" %}
+{% block extrahead %}
+
+
+{{ form.media }}
+
+ <script>
+  $(function() {
+    $( "#datepicker" ).datepicker({
+      showButtonPanel: true
+    });
+  });
+  </script>
+
+{% endblock extrahead %}
+
+{% block content %}
+  <div class="container">
+      <form class="form-blog" action="." method="POST" enctype="multipart/form-data">{% csrf_token %}
+          {% csrf_token %}
+          <h2 class="form-blog-heading">Create Your Post</h2>
+          <input type="file" name="img" id="img" multiple>
+          <span id="findname" width="15" hieght="15"></span>
+          {{form.errors}}
+          {{form}}
+          <div>
+          <button class="btn btn-large btn-primary" type="submit">Save</button>
+          </div>
+      </form>
+  </div>
+{% endblock %}
+
+{% block extrajs %}
+<script src="{{STATIC_URL}}/jquery-1.9.1.min.js"></script>
+<script src="{{STATIC_URL}}/jssor.slider.mini.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+$('#img').change(function () {
+    for (var i=0, len = this.files.length; i < len; i++) {
+        (function (j, self) {
+            var reader = new FileReader()
+            reader.onload = function (e) {
+                // $('ul').append('<li><img src="' + e.target.result + '">' + self.files[j].name + '</li>')
+                $('#findname').append('<span><img src="' + e.target.result + '" width="50" height="50"></span>')
+            }
+            reader.readAsDataURL(self.files[j])
+        })(i, this);
+    }
+});
+
+
+});
+</script>
+{% endblock %}

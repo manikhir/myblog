@@ -1,0 +1,11 @@
+{% if allblogs %}
+    {% for post in allblogs %}
+    <li><a href="{% url 'single' post.id %}">{{ post.title }}</a></li>
+     
+    <img src="{% url 'show_sales_image' sales_id=post.id %}" width="70" height="70" />
+    {{post.date|date:"Y-m-d H:i"}}
+
+    {% endfor %}
+{% else %}
+  <p>There are no Blogs.</p>
+{% endif %}
