@@ -1,5 +1,4 @@
 
-
 """
 Django settings for again_blog project.
 
@@ -11,10 +10,9 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import dj_database_url
 from config import *
 import os
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
 
@@ -53,6 +51,7 @@ INSTALLED_APPS = (
     'datetimewidget',
     'djcelery',
     'kombu.transport.django',
+
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
